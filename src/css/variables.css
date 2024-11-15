@@ -1,5 +1,9 @@
 :root {
   --color-primary-white: #fff;
+  --color-primary-green: #27e92b;
+  --color-light-gray: #f7f7f7;
+  --color-medium-gray: #dddddd;
+  --color-dark-gray: #838383;
 
   --spacing-small: 0.5rem;
   --spacing-medium: 1rem;
