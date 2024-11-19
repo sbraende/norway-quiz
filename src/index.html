@@ -12,34 +12,30 @@
 
 <body>
     <header class="header">
-        <div class="header__restart-container">
+        <section class="header__section">
             <button class="header__restart"><img src="./assets/icons/nav/rotate-ccw.svg" alt=""></button>
-        </div>
+        </section>
         <progress class="header__progressbar" id="file" max="100" value="25"></progress>
     </header>
     <main>
-        <section class="quiz__section">
+        <section class="quiz">
             <h1 class="quiz__question">What are the colours of the Norwegian flag?</h1>
             <div class="quiz__answers-container">
-                <div class="quiz__answer-item">
-                    <input class="answer_radio" type="radio" name="answer" id="option1">
-                    <label for="option1">Red Green Blue</label>
-                </div>
-                <div class="quiz__answer-item">
-                    <input class="answer_radio" type="radio" name="answer" id="option2">
-                    <label for="option2">Red Green Blue this is along sentance of a long question about life and
-                        universe. Etc.</label>
-                </div>
-                <div class="quiz__answer-item">
-                    <input class="answer_radio" type="radio" name="answer" id="option3">
-                    <label for="option3">Red Green Blue</label>
-                </div>
-                <div class="quiz__answer-item">
-                    <input class="answer_radio" type="radio" name="answer" id="option4">
-                    <label for="option4">Red Green Blue</label>
-                </div>
-                <button class="quiz__next-button">Next</button>
+                <button class="quiz__answer quiz__answer1 quiz__answer--correct">
+                    <p>This is a test, that seems to work pretty well</p>
+                </button>
+                <button class="quiz__answer quiz__answer2 quiz__answer--wrong">
+                    <p>This is a test, that seems to work pretty well. Seb is also super cool, and a very nice guy.
+                        Don't you think?</p>
+                </button>
+                <button class="quiz__answer quiz__answer3 quiz__answer--active">
+                    <p>This is a test, that seems to work pretty well</p>
+                </button>
+                <button class="quiz__answer quiz__answer4">
+                    <p>This is a test, that seems to work pretty well</p>
+                </button>
             </div>
+            <button class="quiz__next-button">Next</button>
         </section>
     </main>
     <footer>Sebastian Braende 2024 &COPY; <a href="https://github.com/sbraende">https://github.com/sbraende</a></footer>

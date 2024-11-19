@@ -1,9 +1,16 @@
 :root {
   --color-primary-white: #fff;
-  --color-primary-green: #27e92b;
+  --color-primary-green: #53d476;
+  --color-secondary-green: #e7f9eb;
+  --color-triary-green: #009026;
   --color-light-gray: #f7f7f7;
   --color-medium-gray: #dddddd;
   --color-dark-gray: #838383;
+  --color-primary-blue: #6986ff;
+  --color-secondary-blue: #e9eeff;
+  --color-primary-red: #d45353;
+  --color-secondary-red: #f9e7e7;
+  --color-triary-red: #900000;
 
   --spacing-small: 0.5rem;
   --spacing-medium: 1rem;
