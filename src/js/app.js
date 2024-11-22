@@ -3,7 +3,7 @@ const questionsArray = [
     question: "What peculiar law was introduced in Longyearbyen, Norway?",
     answers: [
       "It's illegal to own a cat.",
-      "You allowed to die there.",
+      "You are not allowed to die there.",
       "No whistling after midnight.",
       "Dogs must wear shoes.",
     ],
@@ -17,11 +17,21 @@ const questionsArray = [
     rightAnswer: 0,
     selectedAnswer: null,
   },
+  {
+    question:
+      "What do Norwegians traditionally say when taking a shot of aquavit?",
+    answers: [
+      "Skål!",
+      "To the fjords!",
+      "Down the hatch!",
+      "May the trolls spare us!",
+    ],
+    rightAnswer: 0,
+    selectedAnswer: null,
+  },
 ];
 
 // GLOBAL SELECTORS
-
-const quizSection = document.querySelector(".quiz");
 
 // FUNCTIONS
 
@@ -41,10 +51,12 @@ const renderQuestion = (questionObject, quizSection) =>
     quizSection
   );
 
-const renderAnswerContainer = (quizSection) =>
+const createAnswerContainer = (quizSection) =>
   createElement("div", "quiz__answers-container", "", quizSection);
 
-const createAnswers = (questionObject, answersContainer) => {
+const createAnswers = (questionObject) => {
+  const answersContainer = document.querySelector(".quiz__answers-container");
+
   questionObject.answers.forEach((answer, i) => {
     const answerButton = document.createElement("button");
     answerButton.classList.add("quiz__answer");
@@ -62,37 +74,31 @@ const createAnswers = (questionObject, answersContainer) => {
   });
 };
 
-// function createAnswers(questionObject, answersContainer) {
-//   questionObject.answers.forEach((answer, i) => {
-//     const answerButton = document.createElement("button");
-//     answerButton.classList.add("quiz__answer");
-//     answerButton.dataset.answerIndex = i;
-//     answerButton.textContent = answer;
-//     answersContainer.append(answerButton);
+const createNextButton = (quizSection) =>
+  createElement("button", "quiz__next-button", "Next", quizSection);
 
-//     answerButton.addEventListener("click", (answer) => {
-//       const allAnswerButtons = document.querySelectorAll(".quiz__answer");
-//       allAnswerButtons.forEach((answer) => {
-//         answer.classList.remove("quiz__answer--active");
-//       });
-//       answer.target.classList.add("quiz__answer--active");
-//     });
-//   });
-// }
-
-function createNextButton(quizSection) {
-  const nextButton = createElement(
-    "button",
-    "quiz__next-button",
-    "Next",
-    quizSection
-  );
+const nextButtonAction = () => {
+  nextButton = document.querySelector(".quiz__next-button");
 
   nextButton.addEventListener("click", () => {
-    const getActive = document.querySelector(".quiz__answer--active");
+    // Get active selection
+    const activeAnswerButton = document.querySelector(".quiz__answer--active");
 
+    // Check if selection is empty
+    if (activeAnswerButton === null) {
+      // TODO: Create visable error
+      console.log("No selection!");
+      round++;
+      return;
+    }
+
+    // Store active selection
+    questionsArray[round].selectedAnswer =
+      activeAnswerButton.dataset.answerIndex;
+
+    // Add score,
     if (
-      parseInt(getActive.dataset.answerIndex) ==
+      parseInt(activeAnswerButton.dataset.answerIndex) ==
       questionsArray[round].rightAnswer
     ) {
       console.log("You have selected the right answer!");
@@ -101,17 +107,29 @@ function createNextButton(quizSection) {
       console.log("Wrong answer");
     }
 
+    // Add round
     round++;
-    console.log(round);
+
+    // Move to next round
+    if (round < questionsArray.length) {
+      renderInterface(questionsArray[round]);
+      console.log(`Round: ${round}`);
+      console.log(`Score: ${score}`);
+    } else {
+      console.log("Render summary");
+    }
   });
-}
+};
 
-// RENDER
+// GLOBAL VARIABLES
+const quizSection = document.querySelector(".quiz");
 
+// RENDER QUESTIONS
 const renderInterface = (questionObject) => {
+  // TODO renderProgressbar(round)
   renderQuestion(questionObject, quizSection);
-  const answersContainer = renderAnswerContainer(quizSection);
-  createAnswers(questionObject, answersContainer);
+  createAnswerContainer(quizSection);
+  createAnswers(questionObject);
   createNextButton(quizSection);
 };
 
@@ -122,10 +140,7 @@ let score = 0;
 
 const main = () => {
   renderInterface(questionsArray[round]);
+  nextButtonAction();
 };
 
 main();
-
-// TODO: Create logic for checking if active is the right button, when the next button is clicked.
-// check which question has active
-// see if active has the index (quiz__answer1) class?
