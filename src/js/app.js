@@ -17,30 +17,38 @@ const questionsArray = [
     rightAnswer: 0,
     selectedAnswer: null,
   },
-  {
-    question:
-      "What do Norwegians traditionally say when taking a shot of aquavit?",
-    answers: [
-      "Skål!",
-      "To the fjords!",
-      "Down the hatch!",
-      "May the trolls spare us!",
-    ],
-    rightAnswer: 0,
-    selectedAnswer: null,
-  },
+  // {
+  //   question:
+  //     "What do Norwegians traditionally say when taking a shot of aquavit?",
+  //   answers: [
+  //     "Skål!",
+  //     "To the fjords!",
+  //     "Down the hatch!",
+  //     "May the trolls spare us!",
+  //   ],
+  //   rightAnswer: 0,
+  //   selectedAnswer: null,
+  // },
 ];
 
-// GLOBAL SELECTORS
-
 // FUNCTIONS
-
 const createElement = (elementType, className, text, parent) => {
   const element = document.createElement(elementType);
   element.classList.add(className);
   element.textContent = text;
   parent.append(element);
   return element;
+};
+
+const clearInterface = (quizSection) => {
+  while (quizSection.firstChild) {
+    quizSection.removeChild(quizSection.firstChild);
+  }
+};
+
+const renderProgressbar = (round) => {
+  const progressBar = document.querySelector(".header__progressbar");
+  progressBar.value = (round / questionsArray.length) * 100;
 };
 
 const renderQuestion = (questionObject, quizSection) =>
@@ -74,10 +82,30 @@ const createAnswers = (questionObject) => {
   });
 };
 
+const createSummeryAnswers = (questionObject, answersContainer) => {
+  questionObject.answers.forEach((answer, i) => {
+    const answerButton = document.createElement("button");
+    answerButton.classList.add("quiz__answer");
+    answerButton.dataset.answerIndex = i;
+    answerButton.textContent = answer;
+    answersContainer.append(answerButton);
+
+    // Player selected right answer
+    if (i === parseInt(questionObject.selectedAnswer)) {
+      answerButton.classList.add("quiz__answer--correct");
+    } else {
+      // WHERE I GOT UP TO...
+    }
+  });
+
+  // else, highlight user selection in red for wrong choice (.quiz__answer--wrong)
+  // And color highlight corret answer with yellow
+};
+
 const createNextButton = (quizSection) =>
   createElement("button", "quiz__next-button", "Next", quizSection);
 
-const nextButtonAction = () => {
+const nextButtonEvent = () => {
   nextButton = document.querySelector(".quiz__next-button");
 
   nextButton.addEventListener("click", () => {
@@ -117,30 +145,53 @@ const nextButtonAction = () => {
       console.log(`Score: ${score}`);
     } else {
       console.log("Render summary");
+      renderSummmary();
     }
   });
 };
 
 // GLOBAL VARIABLES
 const quizSection = document.querySelector(".quiz");
+let round = 0;
+let score = 0;
 
 // RENDER QUESTIONS
 const renderInterface = (questionObject) => {
-  // TODO renderProgressbar(round)
+  clearInterface(quizSection);
+
+  renderProgressbar(round);
   renderQuestion(questionObject, quizSection);
   createAnswerContainer(quizSection);
   createAnswers(questionObject);
   createNextButton(quizSection);
+  nextButtonEvent();
+};
+
+// RENDER SUMMARY
+const renderSummmary = () => {
+  clearInterface(quizSection);
+  quizSection.remove();
+
+  renderProgressbar(questionsArray.length);
+  // For each question render whole HTML
+  questionsArray.forEach((questionObject) => {
+    // Create a new quiz section?
+    const summerySection = createElement(
+      "section",
+      "quiz",
+      "",
+      document.querySelector("main")
+    );
+
+    renderQuestion(questionObject, summerySection);
+    const answerContainer = createAnswerContainer(summerySection);
+    createSummeryAnswers(questionObject, answerContainer);
+  });
 };
 
 // MAIN LOGIC
-
-let round = 0;
-let score = 0;
-
 const main = () => {
   renderInterface(questionsArray[round]);
-  nextButtonAction();
 };
 
 main();
