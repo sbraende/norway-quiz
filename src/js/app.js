@@ -87,7 +87,7 @@ const questionsArray = [
   },
 ];
 
-// FUNCTIONS
+// GENERAL FUNCTIONS
 const createElement = (elementType, className, text, parent) => {
   const element = document.createElement(elementType);
   element.classList.add(className);
@@ -97,7 +97,7 @@ const createElement = (elementType, className, text, parent) => {
 };
 
 const clearInterface = (element) => {
-  // Check with Reza
+  // Double-check
   while (element.firstChild) {
     element.removeChild(element.firstChild);
   }
@@ -153,6 +153,7 @@ const createSummery = (questionObject, answersContainer) => {
     answerButton.textContent = answer;
     answersContainer.append(answerButton);
 
+    // Helper variables.
     const currentButton = i;
     const selectedAnswer = parseInt(questionObject.selectedAnswer);
     const rightAnswer = questionObject.rightAnswer;
@@ -190,9 +191,6 @@ const nextButtonEvent = () => {
 
     // Check if selection is empty
     if (activeAnswerButton === null) {
-      // TODO: Create visable error. Tmp fix, move
-      // console.log("No selection!");
-      round++;
       return;
     }
 
