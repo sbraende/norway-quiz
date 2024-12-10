@@ -10,3 +10,7 @@ The design of this quiz is inspired by:
 
 - [Brilliant.org](https://brilliant.org/)
 - [Paresh Khatri](https://dribbble.com/kpdesigns) on Dribbble
+
+References:
+
+- ChatGPT was used for generating questions and answers. The answers was then doublechecked by me.
