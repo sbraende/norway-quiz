@@ -19,23 +19,29 @@ The design of this quiz is inspired by:
 - [Brilliant.org](https://brilliant.org/)
 - [Paresh Khatri](https://dribbble.com/kpdesigns) on Dribbble
 
+## Installation
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/sbraende/norway-quiz
+```
+
+2. Navigate into the source directory:
+
+```bash
+`cd norway-quiz/src`
+```
+
+3. Open `index.html` in your favorite browser to get started.
+
 ## License
 
 This project is licensed under the [MIT License](./LICENSE). Feel free to use, modify, and distribute this project as per the terms of the license.
 
-Quiz to test your knowledge of Norwegian fun facts, built with vanilla HTML, CSS, and JavaScript.
+## References
 
-Github repository:
-https://github.com/sbraende/norway-quiz
+This project benefited from the assistance of AI tools:
 
-Published webpage:
-https://sbraende-quiz.netlify.app
-
-The design of this quiz is inspired by:
-
-- [Brilliant.org](https://brilliant.org/)
-- [Paresh Khatri](https://dribbble.com/kpdesigns) on Dribbble
-
-References:
-
-- ChatGPT was used for generating questions and answers. The answers was then doublechecked by me.
+- Questions and answers were initially generated with ChatGPT then reviewed.
+- ChatGPT also assisted in drafting parts of this README.
