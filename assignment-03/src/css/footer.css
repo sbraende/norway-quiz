@@ -1,0 +1,14 @@
+footer {
+  text-align: center;
+  color: var(--color-medium-gray);
+  padding-bottom: var(--spacing-xlarge);
+}
+
+footer a {
+  color: var(--color-medium-gray);
+  font-weight: 500;
+}
+
+footer a:hover {
+  border-bottom: 2px solid var(--color-medium-gray);
+}
