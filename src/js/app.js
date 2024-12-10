@@ -1,3 +1,4 @@
+// MAIN QUESTION ARRAY
 const questionsArray = [
   {
     question: "What peculiar law was introduced in Longyearbyen, Norway?",
@@ -87,6 +88,14 @@ const questionsArray = [
   },
 ];
 
+// GLOBAL SELECTORS
+const progressBar = document.querySelector(".header__progressbar");
+const quizSection = document.querySelector(".quiz");
+
+// GLOBAL VARIABLES
+let round = 0;
+let score = 0;
+
 // GENERAL FUNCTIONS
 const createElement = (elementType, className, text, parent) => {
   const element = document.createElement(elementType);
@@ -96,15 +105,9 @@ const createElement = (elementType, className, text, parent) => {
   return element;
 };
 
-const clearInterface = (element) => {
-  // Double-check
-  while (element.firstChild) {
-    element.removeChild(element.firstChild);
-  }
-};
+const clearElementContent = (element) => (element.textContent = "");
 
 const renderProgressbar = (round) => {
-  const progressBar = document.querySelector(".header__progressbar");
   progressBar.value = (round / questionsArray.length) * 100;
 };
 
@@ -138,31 +141,23 @@ const createAnswers = (questionObject) => {
 
 const createSummery = (questionObject, answersContainer) => {
   questionObject.answers.forEach((answer, i) => {
-    // TODO: Why does createElement not work? ...
-    // const answerButton = createElement(
-    //   "button",
-    //   "quiz__answer",
-    //   test,
-    //   answersContainer
-    // );
-    // answerButton.dataset.answerIndex = i;
-
     const answerButton = document.createElement("button");
     answerButton.classList.add("quiz__answer");
     answerButton.dataset.answerIndex = i;
     answerButton.textContent = answer;
     answersContainer.append(answerButton);
 
-    // Helper variables.
+    // Helper variables for logic.
     const currentButton = i;
     const selectedAnswer = parseInt(questionObject.selectedAnswer);
     const rightAnswer = questionObject.rightAnswer;
 
-    // if current Button (i), selectedAnswer and correctAnswer is the same
+    // if current Button, selectedAnswer and correctAnswer is the same
     if (currentButton === selectedAnswer && selectedAnswer === rightAnswer) {
+      // answer is correc.
       answerButton.classList.add("quiz__answer--correct");
     } else {
-      // highlight selectedAnswer and the correctAnswer
+      // else, highlight selectedAnswer and the correctAnswer
       if (currentButton === selectedAnswer) {
         answerButton.classList.add("quiz__answer--wrong");
       }
@@ -174,7 +169,7 @@ const createSummery = (questionObject, answersContainer) => {
 };
 
 const createNextButton = (parent) => {
-  // Create next button, create submit button if last round.
+  // Create next button. Create submit button if last round.
   if (round < questionsArray.length - 1) {
     createElement("button", "quiz__next-button", "Next", parent);
   } else {
@@ -189,7 +184,7 @@ const nextButtonEvent = () => {
     // Get active button
     const activeAnswerButton = document.querySelector(".quiz__answer--active");
 
-    // Check if selection is empty
+    // Check if selection is empty. If empty user can't move forwards in quiz.
     if (activeAnswerButton === null) {
       return;
     }
@@ -203,10 +198,10 @@ const nextButtonEvent = () => {
       parseInt(activeAnswerButton.dataset.answerIndex) ===
       questionsArray[round].rightAnswer
     ) {
-      // console.log("You have selected the right answer!");
+      // Right answer!
       score++;
     } else {
-      // console.log("Wrong answer");
+      // Wrong answer"
     }
 
     // Add round
@@ -215,10 +210,7 @@ const nextButtonEvent = () => {
     // Move to next round, if not go to summery
     if (round < questionsArray.length) {
       renderInterface(questionsArray[round]);
-      // console.log(`Round: ${round}`);
-      // console.log(`Score: ${score}`);
     } else {
-      // console.log("Render summary");
       renderSummmary();
     }
   });
@@ -242,7 +234,7 @@ const createReviewButton = () =>
 
 const renderQuestionsSummary = () => {
   questionsArray.forEach((questionObject) => {
-    // Create new quiz section
+    // Create new quiz section for summery
     const summerySection = createElement(
       "section",
       "quiz",
@@ -256,15 +248,9 @@ const renderQuestionsSummary = () => {
   });
 };
 
-// GLOBAL VARIABLES
-const quizSection = document.querySelector(".quiz");
-let round = 0;
-let score = 0;
-
 // RENDER QUESTIONS
 const renderInterface = (questionObject) => {
-  clearInterface(quizSection);
-
+  clearElementContent(quizSection);
   renderProgressbar(round);
   renderQuestion(questionObject, quizSection);
   createAnswerContainer(quizSection);
@@ -273,11 +259,10 @@ const renderInterface = (questionObject) => {
   nextButtonEvent();
 };
 
-// RENDER SUMMARY
+// RENDER SUMMARY - Event from Submit button
 const renderSummmary = () => {
-  clearInterface(quizSection);
-  quizSection.remove();
-
+  clearElementContent(quizSection);
+  quizSection.remove(); // Removes quiz section/container.
   renderProgressbar(questionsArray.length);
   renderFinalScore();
 
@@ -289,8 +274,7 @@ const renderSummmary = () => {
 };
 
 // MAIN LOGIC
-const main = () => {
-  renderInterface(questionsArray[round]);
-};
-
-main();
+document.addEventListener(
+  "DOMContentLoaded",
+  renderInterface(questionsArray[round])
+);
