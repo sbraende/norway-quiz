@@ -18,3 +18,7 @@ The design of this quiz is inspired by:
 
 - [Brilliant.org](https://brilliant.org/)
 - [Paresh Khatri](https://dribbble.com/kpdesigns) on Dribbble
+
+## License
+
+This project is licensed under the [MIT License](./LICENSE.md). Feel free to use, modify, and distribute this project as per the terms of the license.
