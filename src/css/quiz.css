@@ -181,12 +181,3 @@ main {
     font-weight: 700;
   }
 }
-
-/* DARKMODE */
-@media (prefers-color-scheme: dark) {
-  .quiz__next-button,
-  .quiz__review-button {
-    background-color: var(--color-primary-white);
-    color: var(--color-primary-back);
-  }
-}
