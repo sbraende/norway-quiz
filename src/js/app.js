@@ -141,6 +141,10 @@ const createAnswers = (questionObject) => {
 };
 
 const createSummery = (questionObject, answersContainer) => {
+  // FUNCTION VARIABLES
+  let isCorrect = false;
+
+  // RENDER QUESTIONS
   questionObject.answers.forEach((answer, i) => {
     const answerButton = document.createElement("button");
     answerButton.classList.add("quiz__answer");
@@ -148,15 +152,16 @@ const createSummery = (questionObject, answersContainer) => {
     answerButton.textContent = answer;
     answersContainer.append(answerButton);
 
-    // Helper variables for logic.
+    // Helper variables for logic
     const currentButton = i;
     const selectedAnswer = parseInt(questionObject.selectedAnswer);
     const rightAnswer = questionObject.rightAnswer;
 
-    // if current Button, selectedAnswer and correctAnswer is the same
+    // If current Button, selectedAnswer and correctAnswer is the same
     if (currentButton === selectedAnswer && selectedAnswer === rightAnswer) {
-      // answer is correc.
+      // answer is correct
       answerButton.classList.add("quiz__answer--correct");
+      isCorrect = true;
     } else {
       // else, highlight selectedAnswer and the correctAnswer
       if (currentButton === selectedAnswer) {
@@ -167,6 +172,22 @@ const createSummery = (questionObject, answersContainer) => {
       }
     }
   });
+
+  // RENDER FEEDBACK
+  const answerFeedbackText = createElement(
+    "p",
+    "quiz__answer-feedback-text",
+    "",
+    answersContainer
+  );
+
+  if (isCorrect) {
+    answerFeedbackText.textContent = "Correct 🎉";
+    answerFeedbackText.classList.add("quiz__answer-feedback-text--correct");
+  } else {
+    answerFeedbackText.textContent = "That's incorrect";
+    answerFeedbackText.classList.add("quiz__answer-feedback-text--wrong");
+  }
 };
 
 const createNextButton = (parent) => {
@@ -239,19 +260,19 @@ const renderFinalScore = () => {
   );
 
   if (score === 0) {
-    scoreTitle.textContent = "You have been banished from Valhalla!";
+    scoreTitle.textContent = '"You have been banished from Valhalla!"';
     scoreMessage.textContent =
       "It seems the Norns have not woven knowledge into your fate this time. Fear not, young warrior—return and try again to earn your place among the legends.";
   } else if (score < 3) {
-    scoreTitle.textContent = "A humble thrall's effort.";
+    scoreTitle.textContent = '"A humble thrall´s effort."';
     scoreMessage.textContent =
       "You've earned the right to tend the fjords, but true Viking glory eludes you. Sharpen your mind like a sword, and set sail once more.";
   } else if (score < 6) {
-    scoreTitle.textContent = "A bold raider in the making!";
+    scoreTitle.textContent = '"A bold raider in the making!"';
     scoreMessage.textContent =
       "You've shown courage and wisdom, worthy of leading a small crew. With a bit more lore in your horn, you'll soon claim your seat at the feast in Valhalla.";
   } else {
-    scoreTitle.textContent = "Jarl of Knowledge!";
+    scoreTitle.textContent = '"Jarl of Knowledge!"';
     scoreMessage.textContent =
       "Your wisdom rivals that of Odin himself! The sagas will sing of your name, and the gods shall toast your intellect for eternity.";
   }
