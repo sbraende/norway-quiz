@@ -107,7 +107,7 @@ const createElement = (elementType, className, text, parent) => {
 
 const clearElementContent = (element) => (element.textContent = "");
 
-// CORE LOGIC
+// CORE LOGIC - QUIZ GAME
 const renderProgressbar = (round, questionsArray) => {
   progressBar.value = (round / questionsArray.length) * 100;
 };
@@ -138,56 +138,6 @@ const createAnswers = (questionObject) => {
       answer.target.classList.add("quiz__answer--active");
     });
   });
-};
-
-const createSummery = (questionObject, answersContainer) => {
-  // FUNCTION VARIABLES
-  let isCorrect = false;
-
-  // RENDER QUESTIONS
-  questionObject.answers.forEach((answer, i) => {
-    const answerButton = document.createElement("button");
-    answerButton.classList.add("quiz__answer");
-    answerButton.dataset.answerIndex = i;
-    answerButton.textContent = answer;
-    answersContainer.append(answerButton);
-
-    // Helper variables for logic
-    const currentButton = i;
-    const selectedAnswer = parseInt(questionObject.selectedAnswer);
-    const rightAnswer = questionObject.rightAnswer;
-
-    // If current Button, selectedAnswer and correctAnswer is the same
-    if (currentButton === selectedAnswer && selectedAnswer === rightAnswer) {
-      // answer is correct
-      answerButton.classList.add("quiz__answer--correct");
-      isCorrect = true;
-    } else {
-      // else, highlight selectedAnswer and the correctAnswer
-      if (currentButton === selectedAnswer) {
-        answerButton.classList.add("quiz__answer--wrong");
-      }
-      if (currentButton === rightAnswer) {
-        answerButton.classList.add("quiz__answer--correctIndicator");
-      }
-    }
-  });
-
-  // RENDER FEEDBACK
-  const answerFeedbackText = createElement(
-    "p",
-    "quiz__answer-feedback-text",
-    "",
-    answersContainer
-  );
-
-  if (isCorrect) {
-    answerFeedbackText.textContent = "Correct 🎉";
-    answerFeedbackText.classList.add("quiz__answer-feedback-text--correct");
-  } else {
-    answerFeedbackText.textContent = "That's incorrect";
-    answerFeedbackText.classList.add("quiz__answer-feedback-text--wrong");
-  }
 };
 
 const createNextButton = (parent) => {
@@ -233,12 +183,13 @@ const nextButtonEvent = () => {
     if (round < questionsArray.length) {
       renderInterface(questionsArray[round]);
     } else {
-      renderSummmary();
+      renderSummary();
     }
   });
 };
 
-const renderFinalScore = () => {
+// CORE LOGIC FOR SUMMARY
+const renderCompletionMessage = () => {
   const scoreTitle = createElement(
     "h1",
     "quiz__summery-title",
@@ -302,6 +253,55 @@ const renderQuestionsSummary = () => {
   });
 };
 
+const createSummery = (questionObject, answersContainer) => {
+  // FUNCTION VARIABLES
+  let isCorrect = false;
+
+  // RENDER QUESTIONS
+  questionObject.answers.forEach((answer, i) => {
+    const answerButton = document.createElement("button");
+    answerButton.classList.add("quiz__answer");
+    answerButton.dataset.answerIndex = i;
+    answerButton.textContent = answer;
+    answersContainer.append(answerButton);
+
+    // Helper variables for logic
+    const currentButton = i;
+    const selectedAnswer = parseInt(questionObject.selectedAnswer);
+    const rightAnswer = questionObject.rightAnswer;
+
+    // If current Button, selectedAnswer and correctAnswer is the same
+    if (currentButton === selectedAnswer && selectedAnswer === rightAnswer) {
+      // answer is correct
+      answerButton.classList.add("quiz__answer--correct");
+      isCorrect = true;
+    } else {
+      // else, highlight selectedAnswer and the correctAnswer
+      if (currentButton === selectedAnswer) {
+        answerButton.classList.add("quiz__answer--wrong");
+      }
+      if (currentButton === rightAnswer) {
+        answerButton.classList.add("quiz__answer--correctIndicator");
+      }
+    }
+  });
+
+  const answerFeedbackText = createElement(
+    "p",
+    "quiz__answer-feedback-text",
+    "",
+    answersContainer
+  );
+
+  if (isCorrect) {
+    answerFeedbackText.textContent = "Correct 🎉";
+    answerFeedbackText.classList.add("quiz__answer-feedback-text--correct");
+  } else {
+    answerFeedbackText.textContent = "That's incorrect";
+    answerFeedbackText.classList.add("quiz__answer-feedback-text--wrong");
+  }
+};
+
 // RENDER QUESTIONS
 const renderInterface = (questionObject) => {
   clearElementContent(quizSection);
@@ -310,15 +310,15 @@ const renderInterface = (questionObject) => {
   createAnswerContainer(quizSection);
   createAnswers(questionObject);
   createNextButton(quizSection);
-  nextButtonEvent();
+  nextButtonEvent(); // Holds the event listener for renderSummary
 };
 
-// RENDER SUMMARY - Event from Submit button
-const renderSummmary = () => {
+// RENDER SUMMARY - Event triggered from Submit button (inside nextButtonEvent())
+const renderSummary = () => {
   clearElementContent(quizSection);
   quizSection.remove(); // Removes quiz section/container.
   renderProgressbar(questionsArray.length, questionsArray);
-  renderFinalScore();
+  renderCompletionMessage();
 
   const reviewButton = createReviewButton();
   reviewButton.addEventListener("click", () => {
