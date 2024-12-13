@@ -217,13 +217,45 @@ const nextButtonEvent = () => {
   });
 };
 
-const renderFinalScore = () =>
-  createElement(
+const renderFinalScore = () => {
+  const scoreTitle = createElement(
     "h1",
     "quiz__summery-title",
-    `Congratulations! You got ${score} out of ${questionsArray.length} 🍾`,
+    "",
     document.querySelector("main")
   );
+  // Score result
+  createElement(
+    "h2",
+    "quiz__summery-description",
+    `You got ${score} out of ${questionsArray.length}.`,
+    document.querySelector("main")
+  );
+  const scoreMessage = createElement(
+    "h2",
+    "quiz__summery-description",
+    "",
+    document.querySelector("main")
+  );
+
+  if (score === 0) {
+    scoreTitle.textContent = "You have been banished from Valhalla!";
+    scoreMessage.textContent =
+      "It seems the Norns have not woven knowledge into your fate this time. Fear not, young warrior—return and try again to earn your place among the legends.";
+  } else if (score < 3) {
+    scoreTitle.textContent = "A humble thrall's effort.";
+    scoreMessage.textContent =
+      "You've earned the right to tend the fjords, but true Viking glory eludes you. Sharpen your mind like a sword, and set sail once more.";
+  } else if (score < 6) {
+    scoreTitle.textContent = "A bold raider in the making!";
+    scoreMessage.textContent =
+      "You've shown courage and wisdom, worthy of leading a small crew. With a bit more lore in your horn, you'll soon claim your seat at the feast in Valhalla.";
+  } else {
+    scoreTitle.textContent = "Jarl of Knowledge!";
+    scoreMessage.textContent =
+      "Your wisdom rivals that of Odin himself! The sagas will sing of your name, and the gods shall toast your intellect for eternity.";
+  }
+};
 
 const createReviewButton = () =>
   createElement(

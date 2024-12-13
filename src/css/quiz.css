@@ -26,6 +26,14 @@ main {
 .quiz__summery-title {
   padding: 0 var(--spacing-large) var(--spacing-xlarge) var(--spacing-large);
   font-size: var(--font-size-xxlarge);
+  text-align: center;
+}
+
+.quiz__summery-description {
+  max-width: 750px;
+  padding: 0 var(--spacing-large) var(--spacing-xlarge) var(--spacing-large);
+  font-weight: 400;
+  font-style: italic;
 }
 
 .quiz__review-button {
