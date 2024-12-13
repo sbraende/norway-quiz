@@ -107,7 +107,8 @@ const createElement = (elementType, className, text, parent) => {
 
 const clearElementContent = (element) => (element.textContent = "");
 
-const renderProgressbar = (round) => {
+// CORE LOGIC
+const renderProgressbar = (round, questionsArray) => {
   progressBar.value = (round / questionsArray.length) * 100;
 };
 
@@ -251,7 +252,7 @@ const renderQuestionsSummary = () => {
 // RENDER QUESTIONS
 const renderInterface = (questionObject) => {
   clearElementContent(quizSection);
-  renderProgressbar(round);
+  renderProgressbar(round, questionsArray);
   renderQuestion(questionObject, quizSection);
   createAnswerContainer(quizSection);
   createAnswers(questionObject);
@@ -263,7 +264,7 @@ const renderInterface = (questionObject) => {
 const renderSummmary = () => {
   clearElementContent(quizSection);
   quizSection.remove(); // Removes quiz section/container.
-  renderProgressbar(questionsArray.length);
+  renderProgressbar(questionsArray.length, questionsArray);
   renderFinalScore();
 
   const reviewButton = createReviewButton();

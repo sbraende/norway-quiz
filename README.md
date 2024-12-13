@@ -30,7 +30,7 @@ git clone https://github.com/sbraende/norway-quiz
 2. Navigate into the source directory:
 
 ```bash
-`cd norway-quiz/src`
+cd norway-quiz/src
 ```
 
 3. Open `index.html` in your favorite browser to get started.
