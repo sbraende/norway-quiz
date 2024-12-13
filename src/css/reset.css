@@ -13,6 +13,7 @@ li {
 }
 
 button {
+  color: var(--color-primary-back);
   background-color: transparent;
   cursor: pointer;
 }
